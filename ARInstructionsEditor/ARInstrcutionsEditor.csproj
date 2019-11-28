@@ -7,8 +7,8 @@
     <ProjectGuid>{913C76D6-DB86-441B-AB01-492E6C07E1CE}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AR_Instructions_Editor</RootNamespace>
-    <AssemblyName>AR-Instrcutions-Editor</AssemblyName>
+    <RootNamespace>ARInstructionsEditor</RootNamespace>
+    <AssemblyName>ARInstrcutionsEditor</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
@@ -288,13 +288,13 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mini Wizard Editor.Core\AR_Instrcutions_Editor.Core.csproj">
-      <Project>{E44E9779-16DE-4F18-BCCC-7D83D6D36E1E}</Project>
-      <Name>AR_Instrcutions_Editor.Core</Name>
-    </ProjectReference>
+    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Themes\" />
+    <ProjectReference Include="..\ARInstructionsEditor.Core\ARInstrcutionsEditor.Core.csproj">
+      <Project>{e44e9779-16de-4f18-bccc-7d83d6d36e1e}</Project>
+      <Name>ARInstrcutionsEditor.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29123.88
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AR_Instrcutions_Editor", "Mini Wizard Editor\AR_Instrcutions_Editor.csproj", "{913C76D6-DB86-441B-AB01-492E6C07E1CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARInstrcutionsEditor", "ARInstructionsEditor\ARInstrcutionsEditor.csproj", "{913C76D6-DB86-441B-AB01-492E6C07E1CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AR_Instrcutions_Editor.Core", "Mini Wizard Editor.Core\AR_Instrcutions_Editor.Core.csproj", "{E44E9779-16DE-4F18-BCCC-7D83D6D36E1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ARInstrcutionsEditor.Core", "ARInstructionsEditor.Core\ARInstrcutionsEditor.Core.csproj", "{E44E9779-16DE-4F18-BCCC-7D83D6D36E1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Debug|Any CPU.Build.0 = Debug|x86
+		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Debug|ARM.ActiveCfg = Debug|ARM
 		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Debug|ARM.Build.0 = Debug|ARM
 		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -30,6 +32,8 @@ Global
 		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Debug|x86.Build.0 = Debug|x86
 		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Debug|x86.Deploy.0 = Debug|x86
 		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Release|Any CPU.ActiveCfg = Release|x86
+		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Release|Any CPU.Build.0 = Release|x86
+		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Release|Any CPU.Deploy.0 = Release|x86
 		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Release|ARM.ActiveCfg = Release|ARM
 		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Release|ARM.Build.0 = Release|ARM
 		{913C76D6-DB86-441B-AB01-492E6C07E1CE}.Release|ARM.Deploy.0 = Release|ARM
