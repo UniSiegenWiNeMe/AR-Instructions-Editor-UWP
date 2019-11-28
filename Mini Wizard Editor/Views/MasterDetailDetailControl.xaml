@@ -1,0 +1,129 @@
+﻿<UserControl
+    x:Class="ARInstructionsEditor.Views.MasterDetailDetailControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:ARInstructionsEditor.Views"
+    xmlns:models="using:ARInstructionsEditor.Core.Models"
+    xmlns:viewModels="using:ARInstructionsEditor.ViewModels"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    >
+    <UserControl.Resources>
+        <local:UriToVideoConverter x:Key="uriToIVideoConv" />
+    </UserControl.Resources>
+    
+    <ScrollViewer
+        Name="ForegroundElement"
+        Padding="{StaticResource DetailPageMargin}"
+        HorizontalAlignment="Stretch"
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+        VerticalScrollMode="Enabled">
+        <StackPanel HorizontalAlignment="Left">
+            <StackPanel Name="block" Padding="0,15,0,0">
+                <TextBlock Style="{StaticResource DetailSubTitleStyle}" Text="Schrittnummer:" />
+                <TextBlock Style="{StaticResource DetailBodyBaseMediumStyle}" Text="{x:Bind MasterMenuItem.StepNumber, Mode=OneWay}" />
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Button IsEnabled="{Binding PreviousStepAvaiable}" Click="ButtonVor_Click" Grid.Column="0" Margin="0,0,10,0">Nach vorne verschieben</Button>
+                    <Button IsEnabled="{Binding NextStepAvaiable}" Click="ButtonHinten_Click" Grid.Column="1">Nach hinten verschieben</Button>
+                </Grid>
+                <TextBlock
+                    Margin="{StaticResource SmallTopMargin}"
+                    Style="{StaticResource DetailSubTitleStyle}"
+                    Text="Anweisungstext:" />
+                <!--<TextBlock Style="{StaticResource DetailBodyBaseMediumStyle}" Text="{Binding Path=Text, Mode=OneWay}" FontFamily="Segoe UI" />-->
+                <TextBox Text="{x:Bind MasterMenuItem.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                <TextBlock
+                    Margin="{StaticResource SmallTopMargin}"
+                    Style="{StaticResource DetailSubTitleStyle}"
+                    Text="Fotos:" />
+                <GridView
+                    animations:Connected.ListItemElementName="thumbnailImage"
+                    animations:Connected.ListItemKey="galleryAnimationKey"
+                    IsItemClickEnabled="True"
+                    ItemClick="ImagesGridView_ItemClick"
+                    ItemsSource="{Binding Path=Photos, Mode=OneWay}"
+                    SelectionMode="None"
+                    RightTapped="GridView_RightTapped">
+                    <GridView.Resources>
+                        <MenuFlyout x:Name="PhotosMenuFlyout">
+                            <MenuFlyout.Items>
+                                <MenuFlyoutItem x:Name="Remove" Text="Remove" Icon="Delete" Click="Remove_Click" />
+                            </MenuFlyout.Items>
+                        </MenuFlyout>
+                    </GridView.Resources>
+
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="viewModels:MediaFileViewModel">
+                            <Image
+                            x:Name="thumbnailImage"
+                            AutomationProperties.Name=""
+                            Source="{x:Bind FileName, Mode=OneWay}"
+                            Width="160"
+                            Height="160"
+                            ToolTipService.ToolTip="" />
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+                <!--Padding="{StaticResource MediumLeftRightMargin}"-->
+
+                <Button Click="ButtonAddPhoto_Click">Foto hinzufügen</Button>
+                <TextBlock
+                    Margin="{StaticResource SmallTopMargin}"
+                    Style="{StaticResource DetailSubTitleStyle}"
+                    Text="Videos:" />
+
+                <GridView
+                    animations:Connected.ListItemElementName="thumbnailImage"
+                    animations:Connected.ListItemKey="galleryAnimationKey"
+                    IsItemClickEnabled="False"
+                    ItemsSource="{Binding Path=Videos, Mode=OneWay}"
+                    SelectionMode="None">
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="viewModels:MediaFileViewModel">
+                            <MediaPlayerElement x:Name="mediaPlayer"
+                                Source="{x:Bind FileName, Mode=OneWay, Converter={StaticResource uriToIVideoConv}}"
+                                Width="400"
+                                AutoPlay="False"
+                                AreTransportControlsEnabled="True">
+                                <MediaPlayerElement.TransportControls>
+                                    <MediaTransportControls IsCompact="True"/>
+                                </MediaPlayerElement.TransportControls>
+                            </MediaPlayerElement>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+
+                <Button Click="ButtonAddVideo_Click">Video hinzufügen</Button>
+                <!--Padding="{StaticResource MediumLeftRightMargin}"-->
+
+                <!--<Image
+                            x:Name="thumbnailImage"
+                            AutomationProperties.Name=""
+                            Source="{x:Bind FileName, Mode=OneWay}"
+                            Width="160"
+                            Height="160"
+                            ToolTipService.ToolTip="" />-->
+                <!--<Image >
+                    <Image.Source>
+                        <BitmapImage UriSource="{x:Bind MasterMenuItem.Text, Mode=OneWay}"/>
+                    </Image.Source>
+                </Image>-->
+
+                <!--Source="{x:Bind MasterMenuItem.MediaFiles[0].filename, Converter={StaticResource uriToImageConv}, Mode=OneWay}"/>-->
+
+                <!--Source="{Binding Path=Text, Mode=OneTime, Converter={StaticResource uriToImageConv}}" Stretch="UniformToFill"  Width="200" Height="100"/>-->
+
+            </StackPanel>
+
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
