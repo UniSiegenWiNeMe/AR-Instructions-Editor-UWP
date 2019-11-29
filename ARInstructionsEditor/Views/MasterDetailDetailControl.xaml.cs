@@ -59,7 +59,10 @@ namespace ARInstructionsEditor.Views
         {
             MasterMenuItem.IncreaseStepNumber();
         }
-
+        private void ButtonNew_Click(object sender, RoutedEventArgs e)
+        {
+            MasterMenuItem.AddNewStep();
+        }
         private async void ButtonAddPhoto_Click(object sender, RoutedEventArgs e)
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
@@ -146,6 +149,47 @@ namespace ARInstructionsEditor.Views
                 // Do nothing.
             }
 
+        }
+
+        private async void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (StepViewModel.MaxSteps > 1)
+            {
+                ContentDialog deleteFileDialog = new ContentDialog
+                {
+                    Title = "Schritt wirklich löschen?",
+                    Content = "Wollen Sie diesen Schritt wirklich löschen?",
+                    PrimaryButtonText = "Löschen",
+                    CloseButtonText = "Abbrechen"
+                };
+
+                ContentDialogResult result = await deleteFileDialog.ShowAsync();
+
+                // Delete the file if the user clicked the primary button.
+                /// Otherwise, do nothing.
+                if (result == ContentDialogResult.Primary)
+                {
+                    // Delete the file.
+                    MasterMenuItem.RemoveStep();
+                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Photos"));
+                }
+                else
+                {
+                    // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                    // Do nothing.
+                }
+            }
+            else
+            {
+                ContentDialog errorDialog = new ContentDialog
+                {
+                    Title = "Schritt kann nicht gelöscht werden.",
+                    Content = "Dieser Schritt kann nicht gelöscht werden. Die Anleitung muss mindestens einen Schritt enthalten.",
+                    PrimaryButtonText = "Ok",
+                   
+                };
+                await errorDialog.ShowAsync();
+            }
         }
     }
 

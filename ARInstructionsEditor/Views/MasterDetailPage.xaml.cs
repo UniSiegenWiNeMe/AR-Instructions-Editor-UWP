@@ -40,6 +40,8 @@ namespace ARInstructionsEditor.Views
             }
         }
         private StepViewModel _selected;
+        private Instruction _instruction;
+
         public StepViewModel Selected
         {
             get { return _selected; }
@@ -56,6 +58,12 @@ namespace ARInstructionsEditor.Views
         {
             InitializeComponent();
             Loaded += MasterDetailPage_Loaded;
+            InstructionDataProvider.NameChanged += InstructionDataProvider_NameChanged;
+        }
+
+        private void InstructionDataProvider_NameChanged(object sender, EventArgs e)
+        {
+            InstructionName = InstructionDataProvider.Instruction.Name;
         }
 
         private void MasterDetailPage_Loaded(object sender, RoutedEventArgs e)
@@ -67,11 +75,22 @@ namespace ARInstructionsEditor.Views
             }
 
             StepItems.Clear();
-            var data = InstructionDataProvider.Instruction.Steps;
-            InstructionName = InstructionDataProvider.Instruction.Name;
-            foreach (var item in data)
+            if (InstructionDataProvider.Instruction != null)
             {
-                StepItems.Add(new StepViewModel(item, data.Count()));
+                InstructionName = InstructionDataProvider.Instruction.Name;
+            }
+            else
+            {
+                InstructionDataProvider.Instruction = new Instruction();
+                _instruction = InstructionDataProvider.Instruction;
+
+                _instruction.Steps.Add(new Step() { StepNumber = 0, Items = new List<Item>() }); ;
+            }
+
+            StepViewModel.MaxSteps = InstructionDataProvider.Instruction.Steps.Count();
+            foreach (var item in InstructionDataProvider.Instruction.Steps)
+            {
+                StepItems.Add(new StepViewModel(item));
             }
 
             if (MasterDetailsViewControl.ViewState == MasterDetailsViewState.Both)
@@ -104,6 +123,49 @@ namespace ARInstructionsEditor.Views
 
                 Selected = StepItems[eventArgs.NewValue];
             }
+            if(e.PropertyName == "NewItem")
+            {
+                var eventArgs = e as PropertyChangedExtendedEventArgs<StepViewModel>;
+
+                if(eventArgs.OldValue.NextStepAvaiable)
+                {
+                    StepItems.Insert(eventArgs.OldValue.StepNumber, eventArgs.NewValue);
+                    Selected = StepItems[eventArgs.OldValue.StepNumber];
+                }
+                else
+                {
+                    StepItems.Add(eventArgs.NewValue);
+                    Selected = StepItems[StepItems.Count -1];
+                }
+                StepViewModel.MaxSteps = StepItems.Count;
+                for (int i = 0; i < StepItems.Count(); i++)
+                {
+                    StepItems[i].StepNumber = i;
+                }
+                
+
+            }
+            if (e.PropertyName == "RemoveItem")
+            {
+                var tmp = sender as StepViewModel;
+                
+                StepItems.Remove(sender as StepViewModel);
+                StepViewModel.MaxSteps = StepItems.Count;
+                for (int i = 0; i < StepItems.Count(); i++)
+                {
+                    StepItems[i].StepNumber = i;
+                }
+
+
+                if (tmp.StepNumber == 1)
+                {
+                    Selected = StepItems[0];
+                }
+                else
+                {
+                    Selected = StepItems[tmp.StepNumber - 2];
+                }
+            }
             InstructionDataProvider.UpdateData(ConvertToListofSteps(StepItems));
         }
 
@@ -111,10 +173,10 @@ namespace ARInstructionsEditor.Views
         {
             var ret = new List<Step>();
 
-            foreach (var step in stepItems)
+            foreach (var stepVM in stepItems)
             {
                 var tmpMediaFiles = new List<MediaFile>();
-                foreach (var file in step.Photos)
+                foreach (var file in stepVM.Photos)
                 {
                     tmpMediaFiles.Add(new MediaFile()
                     {
@@ -125,10 +187,10 @@ namespace ARInstructionsEditor.Views
 
                 ret.Add(new Step()
                 {
-                    StepNumber = step.StepNumber - 1,
-                    Items = step.Items,
+                    StepNumber = stepVM.StepNumber - 1,
+                    Items = stepVM.Items,
                     MediaFiles = tmpMediaFiles,
-                    Text = step.Text
+                    Text = stepVM.Text
                 });
             }
             return ret;
@@ -136,30 +198,6 @@ namespace ARInstructionsEditor.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            //Source.Clear();
-
-            //// TODO WTS: Replace this with your actual data
-            //var data = await InstructionDataProvider.GetImagesByStepNumber(currentStepID); /*SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");*/
-
-            //foreach (var item in data)
-            //{
-            //    Source.Add(mediaFileToMediaFileViewModel(item));
-            //}
-
-
-            //if (!string.IsNullOrEmpty(selectedImageID) && e.NavigationMode == NavigationMode.New)
-            //{
-            //    SelectedImage = Source.FirstOrDefault(i => i.FileName == selectedImageID);
-            //}
-            //else
-            //{
-            //    selectedImageID = ImagesNavigationHelper.GetImageId(MasterDetailDetailControl.ImageGallerySelectedIdKey);
-            //    if (!string.IsNullOrEmpty(selectedImageID))
-            //    {
-            //        SelectedImage = Source.FirstOrDefault(i => i.FileName == selectedImageID);
-            //    }
-            //}
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -176,13 +214,40 @@ namespace ARInstructionsEditor.Views
                 storage.PropertyChanged -= Selected_PropertyChanged;
             }
 
-            storage = value; /*!= null ? new StepViewModel(value) : null;*/
+            storage = value;
 
             if (storage != null)
             {
                 storage.PropertyChanged += Selected_PropertyChanged;
             }
             OnPropertyChanged(propertyName);
+        }
+
+        /// <summary>
+        /// resets the page
+        /// </summary>
+        /// <param name="createNew">if true, a new instruction will be instanitated</param>
+        internal void Reset(bool createNew = true)
+        {
+            StepItems.Clear();
+
+            if (createNew)
+            {
+                InstructionDataProvider.Instruction = new Instruction();
+                InstructionDataProvider.Instruction.Steps.Add(new Step() { StepNumber = 0, Items = new List<Item>() });
+            }
+            _instruction = InstructionDataProvider.Instruction;
+            InstructionName = _instruction.Name;
+            StepViewModel.MaxSteps = InstructionDataProvider.Instruction.Steps.Count();
+            foreach (var item in InstructionDataProvider.Instruction.Steps)
+            {
+                StepItems.Add(new StepViewModel(item));
+            }
+
+            if (MasterDetailsViewControl.ViewState == MasterDetailsViewState.Both)
+            {
+                Selected = StepItems.FirstOrDefault();
+            }
         }
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -30,6 +30,8 @@
                 TODO WTS: You can edit the text for the menu in String/en-US/Resources.resw
                 -->
                 <winui:MenuBarItem x:Uid="ShellMenuBarItem_File">
+                    <MenuFlyoutItem x:Uid="ShellMenuItem_File_Create" Click="ShellMenuItemClick_File_Create" />
+                    <MenuFlyoutItem x:Uid="ShellMenuItem_File_Load" Click="ShellMenuItemClick_File_Load" />
                     <MenuFlyoutItem x:Uid="ShellMenuItem_File_Export" Click="ShellMenuItemClick_File_Export" />
                     <MenuFlyoutSeparator/>
                     <MenuFlyoutItem x:Uid="ShellMenuItem_File_Exit" Click="ShellMenuItemClick_File_Exit" />

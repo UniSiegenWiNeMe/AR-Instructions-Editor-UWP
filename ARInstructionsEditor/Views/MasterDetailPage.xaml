@@ -28,7 +28,7 @@
                     Grid.Column="1"
                     Margin="{StaticResource SmallLeftMargin}"
                     VerticalAlignment="Center">
-                    <TextBlock Text="{x:Bind Text, Mode=OneWay}" Style="{ThemeResource ListTitleStyle}" />
+                    <TextBlock Text="{x:Bind NumberAndText, Mode=OneWay}" Style="{ThemeResource ListTitleStyle}" />
                     <!--<TextBlock Text="{x:Bind Status}" Style="{StaticResource ListSubTitleStyle}" />-->
                 </StackPanel>
             </Grid>
@@ -73,7 +73,7 @@
             ItemsSource="{x:Bind StepItems}"
             ItemTemplate="{StaticResource ItemTemplate}"
             MasterHeaderTemplate="{StaticResource MasterHeaderTemplate}"
-            MasterHeader ="{x:Bind InstructionName, Mode=OneWay}"
+            MasterHeader="{x:Bind InstructionName, Mode=OneWay}"
             SelectedItem="{x:Bind Selected, Mode=TwoWay}" />
     </Grid>
     <!--NoSelectionContentTemplate="{StaticResource NoSelectionContentTemplate}"-->

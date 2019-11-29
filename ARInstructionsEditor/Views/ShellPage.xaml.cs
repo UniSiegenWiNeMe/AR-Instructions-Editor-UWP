@@ -82,28 +82,6 @@ namespace ARInstructionsEditor.Views
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private async void ShellMenuItemClick_File_Open(object sender, RoutedEventArgs e)
-        {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
-            picker.FileTypeFilter.Add(".zip");
-
-            Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
-            if (file != null)
-            {
-                using (Stream zipToOpen = await file.OpenStreamForReadAsync())
-                {
-                    using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
-                    {
-                        archive.ExtractToDirectory(ApplicationData.Current.RoamingFolder.Path, true);
-                    }
-                }
-            }
-            else
-            {
-            }
-        }
         private async void ShellMenuItemClick_File_Export(object sender, RoutedEventArgs e)
         {
             var savePicker = new Windows.Storage.Pickers.FileSavePicker();
@@ -127,6 +105,7 @@ namespace ARInstructionsEditor.Views
 
                 using (Stream zipFileToSave = await file.OpenStreamForWriteAsync())
                 {
+                    zipFileToSave.SetLength(0);
                     await InstructionDataProvider.ExportAsync(ApplicationData.Current.TemporaryFolder.Path, file.DisplayName , zipFileToSave);
                 }
 
@@ -137,23 +116,110 @@ namespace ARInstructionsEditor.Views
                     await Windows.Storage.CachedFileManager.CompleteUpdatesAsync(file);
                 if (status == Windows.Storage.Provider.FileUpdateStatus.Complete)
                 {
-                    //this.textBlock.Text = "File " + file.Name + " was saved.";
                 }
                 else
                 {
-                    //this.textBlock.Text = "File " + file.Name + " couldn't be saved.";
                 }
             }
             else
             {
-                //this.textBlock.Text = "Operation cancelled.";
             }
+        }
 
+        private async void ShellMenuItemClick_File_Create(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.Frame.Content is MasterDetailPage)
+            {
+                ContentDialog createNewFileDialog = new ContentDialog
+                {
+                    Title = "Neue Anleitung anlegen?",
+                    Content = "Änderungen an der aktuellen Anleitung gehen verloren, wenn sie zuvor nicht exportiert wurden.",
+                    PrimaryButtonText = "Neue Anleitung anlegen",
+                    CloseButtonText = "Abbruch"
+                };
 
-
-
-            
+                ContentDialogResult result = await createNewFileDialog.ShowAsync();
                 
+                if (result == ContentDialogResult.Primary)
+                {
+                    var page = NavigationService.Frame.Content as MasterDetailPage;
+                    if (page != null)
+                    {
+                        page.Reset();
+                    }
+                }
+            }
+            else
+            {
+                NavigationService.Navigate<MasterDetailPage>();
+            }
+        }
+
+
+        private async void ShellMenuItemClick_File_Load(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.Frame.Content is MasterDetailPage)
+            {
+                ContentDialog loadFileDialog = new ContentDialog
+                {
+                    Title = "Anleitung laden?",
+                    Content = "Änderungen an der aktuellen Anleitung gehen verloren, wenn sie zuvor nicht exportiert wurden.",
+                    PrimaryButtonText = "Anleitung laden",
+                    CloseButtonText = "Abbruch"
+                };
+
+                ContentDialogResult result = await loadFileDialog.ShowAsync();
+
+                if (result == ContentDialogResult.Primary)
+                {
+                    var page = NavigationService.Frame.Content as MasterDetailPage;
+                    if (page != null)
+                    {
+                        var picker = new Windows.Storage.Pickers.FileOpenPicker();
+                        picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+                        picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+                        picker.FileTypeFilter.Add(".zip");
+
+                        StorageFile file = await picker.PickSingleFileAsync();
+                        if (file != null)
+                        {
+                            using (Stream zipToOpen = await file.OpenStreamForReadAsync())
+                            {
+                                await InstructionDataProvider.LoadDataFromZipAsync(zipToOpen, Path.Combine(ApplicationData.Current.TemporaryFolder.Path, file.DisplayName + ".save"));
+                            }
+                            page.Reset(false);
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (NavigationService.Frame.Content is StartPage)
+                {
+                    var picker = new Windows.Storage.Pickers.FileOpenPicker();
+                    picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+                    picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+                    picker.FileTypeFilter.Add(".zip");
+
+                    StorageFile file = await picker.PickSingleFileAsync();
+                    if (file != null)
+                    {
+                        var page = NavigationService.Frame.Content as StartPage;
+                        page.loading = true;
+
+                        using (Stream zipToOpen = await file.OpenStreamForReadAsync())
+                        {
+                            await InstructionDataProvider.LoadDataFromZipAsync(zipToOpen, Path.Combine(ApplicationData.Current.TemporaryFolder.Path, file.DisplayName + ".save"));
+                        }
+                        NavigationService.Navigate<MasterDetailPage>();
+                    }
+                }
+            }
         }
     }
 }

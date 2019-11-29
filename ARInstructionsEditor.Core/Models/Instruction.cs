@@ -9,5 +9,11 @@ namespace ARInstructionsEditor.Core.Models
         public List<Step> Steps { get; set; }
         public String Name { get; set; }
         public DateTime DateCreated { get; set; }
+    
+        public Instruction()
+        {
+            Steps = new List<Step>();
+            DateCreated = DateTime.Now;
+        }
     }
 }

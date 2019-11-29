@@ -14,20 +14,20 @@ namespace ARInstructionsEditor.Core.Services
     {
         public static Instruction Instruction;
 
+        public static event EventHandler NameChanged;
+
         /// <summary>
         /// Loads data from the given .zip-file
         /// </summary>
         /// <param name="zipToOpen"></param>
         /// <returns></returns>
-        public static async Task LoadDataFromZipAsync(Stream zipToOpen, string instructionFullPath)
+        public static async Task LoadDataFromZipAsync(Stream zipToOpen, string fullExtractionPath)
         {
-            string extractionPath = instructionFullPath.Substring(0, instructionFullPath.LastIndexOf(@"\"));
+            string extractionPath = fullExtractionPath.Substring(0, fullExtractionPath.LastIndexOf(@"\"));
 
             await Task.Run(() => {
                 using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
                 {
-                    //Task.Delay(10000).Wait(); // for testing
-
                     //TODO: check if file(s) already exists
                     foreach (var entry in archive.Entries)
                     {
@@ -41,7 +41,7 @@ namespace ARInstructionsEditor.Core.Services
                     {
                         archive.ExtractToDirectory(extractionPath);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
 
                     }
@@ -49,7 +49,7 @@ namespace ARInstructionsEditor.Core.Services
             });
 
             XmlSerializer serializer = new XmlSerializer(typeof(Instruction));
-            using (Stream reader = new FileStream(instructionFullPath, FileMode.Open))
+            using (Stream reader = new FileStream(fullExtractionPath, FileMode.Open))
             {
                 // Call the Deserialize method to restore the object's state.
                 Instruction = (Instruction)serializer.Deserialize(reader);
@@ -74,9 +74,10 @@ namespace ARInstructionsEditor.Core.Services
             }
 
             Instruction.Name = newInstructionName;
+            NameChanged?.Invoke(Instruction, null);
             //First save instruction to .save file
             XmlSerializer serializer = new XmlSerializer(typeof(Instruction));
-            using (Stream writer = new FileStream(Path.Combine(PathToDataFolder, Instruction.Name + ".save"), FileMode.OpenOrCreate))
+            using (Stream writer = new FileStream(Path.Combine(PathToDataFolder, Instruction.Name + ".save"), FileMode.Create))
             {
                 // Call the Deserialize method to restore the object's state.
                 serializer.Serialize(writer, Instruction);
@@ -86,13 +87,23 @@ namespace ARInstructionsEditor.Core.Services
             {
                 using (ZipArchive archive = new ZipArchive(zipFile, ZipArchiveMode.Create))
                 {
-                    archive.CreateEntryFromFile(Path.Combine(PathToDataFolder, Instruction.Name + ".save"), Instruction.Name + ".save");
+                    //foreach(var entry in archive.Entries)
+                    //{
+                    //    entry.Delete();
+                    //}
+                    archive.CreateEntryFromFile(Path.Combine(PathToDataFolder, Instruction.Name + ".save"), Instruction.Name + ".save", CompressionLevel.Fastest);
+                    var hashSet = new HashSet<String>();
+
 
                     foreach (var step in Instruction.Steps)
                     {
+
                         foreach (var file in step.MediaFiles)
                         {
-                            archive.CreateEntryFromFile(Path.Combine(PathToDataFolder, "media", file.FileName), @"media\" + file.FileName);
+                            if (hashSet.Add(file.FileName))
+                            {
+                                archive.CreateEntryFromFile(Path.Combine(PathToDataFolder, "media", file.FileName), @"media\" + file.FileName);
+                            }
                         }
                     }
                 }

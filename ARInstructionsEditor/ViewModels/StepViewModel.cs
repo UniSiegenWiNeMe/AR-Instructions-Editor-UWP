@@ -12,7 +12,7 @@ namespace ARInstructionsEditor.ViewModels
 {
     public class StepViewModel : INotifyPropertyChanged
     {
-        public int MaxSteps { get; private set; }
+        public static int MaxSteps { get; set; }
 
         private int _stepNumber;
         public int StepNumber
@@ -22,6 +22,7 @@ namespace ARInstructionsEditor.ViewModels
             {
                 Set(ref _stepNumber, value);
                 SetButtonAvailabilities();
+                NumberAndText = StepNumber + ": " + _text;
             }
         }
 
@@ -78,12 +79,30 @@ namespace ARInstructionsEditor.ViewModels
         public string Text
         {
             get { return _text; }
-            set { Set(ref _text, value); }
+            set { Set(ref _text, value);
+                NumberAndText = StepNumber + ": " + _text;
+            }
         }
 
-        public StepViewModel(Step from, int maxSteps)
+        private String _numberAndText;
+
+
+        public string NumberAndText
+        { 
+            get { return _numberAndText; }
+            set { Set(ref _numberAndText, value);}
+        }
+
+        public StepViewModel(int stepNumber)
         {
-            MaxSteps = maxSteps;
+            Photos = new ObservableCollection<MediaFileViewModel>();
+            Videos = new ObservableCollection<MediaFileViewModel>();
+            Items = new List<Item>();
+            this._stepNumber = stepNumber;
+        }
+        public StepViewModel(Step from)
+        {
+            //MaxSteps = maxSteps;
             StepNumber = from.StepNumber;
             Items = from.Items;
             Photos = new ObservableCollection<MediaFileViewModel>();
@@ -115,13 +134,21 @@ namespace ARInstructionsEditor.ViewModels
 
         public StepViewModel(StepViewModel from)
         {
-            MaxSteps = from.MaxSteps;
+            //MaxSteps = from.MaxSteps;
             StepNumber = from.StepNumber-1;
             Items = from.Items;
             Photos = from.Photos;
             Text = from.Text;
         }
-
+        public void RemoveStep()
+        {
+            OnPropertyChanged("RemoveItem", new PropertyChangedExtendedEventArgs<StepViewModel>("RemoveItem", this, null));
+        }
+        public void AddNewStep()
+        {
+            int newStepNumber = this.StepNumber;
+            OnPropertyChanged("NewItem", new PropertyChangedExtendedEventArgs<StepViewModel>("NewItem", this, new StepViewModel(newStepNumber)));
+        }
         public void DecreaseStepNumber()
         {
             Set(ref _stepNumber, _stepNumber - 1, "StepNumber");

@@ -33,7 +33,6 @@ namespace ARInstructionsEditor.Views
         public bool loading
         {
             get { return _loading; }
-            //set { _loading = value; }
             set { Set(ref _loading, value); }
         }
         private void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
@@ -69,11 +68,14 @@ namespace ARInstructionsEditor.Views
                 {
                     await InstructionDataProvider.LoadDataFromZipAsync(zipToOpen, Path.Combine(ApplicationData.Current.TemporaryFolder.Path, file.DisplayName + ".save"));
                 }
-            }
-            else
-            {
-            }
 
+                NavigationService.Navigate<MasterDetailPage>();
+            }
+        }
+
+
+        private void ButtonNew_Click(object sender, RoutedEventArgs e)
+        {
             NavigationService.Navigate<MasterDetailPage>();
         }
     }

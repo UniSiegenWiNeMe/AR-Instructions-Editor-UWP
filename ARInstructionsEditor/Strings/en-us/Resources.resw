@@ -168,4 +168,10 @@
   <data name="ShellMenuItem_File_Export.Text" xml:space="preserve">
     <value>Anleitung exportieren</value>
   </data>
+  <data name="ShellMenuItem_File_Create.Text" xml:space="preserve">
+    <value>Neue Anleitung</value>
+  </data>
+  <data name="ShellMenuItem_File_Load.Text" xml:space="preserve">
+    <value>Anleitung laden</value>
+  </data>
 </root>
