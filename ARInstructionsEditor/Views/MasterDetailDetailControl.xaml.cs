@@ -75,6 +75,11 @@ namespace ARInstructionsEditor.Views
             Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
+                if(!Directory.Exists(Path.Combine(ApplicationData.Current.TemporaryFolder.Path, "media")))
+                {
+                    Directory.CreateDirectory(Path.Combine(ApplicationData.Current.TemporaryFolder.Path, "media"));
+                }
+
                 // Application now has read/write access to the picked file
                 if (!File.Exists(Path.Combine(ApplicationData.Current.TemporaryFolder.Path,"media", file.Name)))
                 {
@@ -101,6 +106,11 @@ namespace ARInstructionsEditor.Views
             Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
+                if (!Directory.Exists(Path.Combine(ApplicationData.Current.TemporaryFolder.Path, "media")))
+                {
+                    Directory.CreateDirectory(Path.Combine(ApplicationData.Current.TemporaryFolder.Path, "media"));
+                }
+
                 // Application now has read/write access to the picked file
                 if (!File.Exists(Path.Combine(ApplicationData.Current.TemporaryFolder.Path,"media", file.Name)))
                 {
@@ -127,10 +137,10 @@ namespace ARInstructionsEditor.Views
         {
             ContentDialog deleteFileDialog = new ContentDialog
             {
-                Title = "Foto wirklich löschen?",
-                Content = "Wollen Sie das Foto wirklich löschen?",
-                PrimaryButtonText = "Löschen",
-                CloseButtonText = "Abbrechen"
+                Title = "Delete photo?",
+                Content = "Are you sure to delete this photo?",
+                PrimaryButtonText = "Delete",
+                CloseButtonText = "Cancel"
             };
 
             ContentDialogResult result = await deleteFileDialog.ShowAsync();
@@ -157,10 +167,10 @@ namespace ARInstructionsEditor.Views
             {
                 ContentDialog deleteFileDialog = new ContentDialog
                 {
-                    Title = "Schritt wirklich löschen?",
-                    Content = "Wollen Sie diesen Schritt wirklich löschen?",
-                    PrimaryButtonText = "Löschen",
-                    CloseButtonText = "Abbrechen"
+                    Title = "Delete step?",
+                    Content = "Are you sure to delete this step?",
+                    PrimaryButtonText = "Delete",
+                    CloseButtonText = "Cancel"
                 };
 
                 ContentDialogResult result = await deleteFileDialog.ShowAsync();
@@ -183,8 +193,8 @@ namespace ARInstructionsEditor.Views
             {
                 ContentDialog errorDialog = new ContentDialog
                 {
-                    Title = "Schritt kann nicht gelöscht werden.",
-                    Content = "Dieser Schritt kann nicht gelöscht werden. Die Anleitung muss mindestens einen Schritt enthalten.",
+                    Title = "This step cannot be deleted",
+                    Content = "This step cannot be deleted. An instructions must contain at least one step",
                     PrimaryButtonText = "Ok",
                    
                 };

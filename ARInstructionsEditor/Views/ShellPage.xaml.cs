@@ -87,7 +87,7 @@ namespace ARInstructionsEditor.Views
             var savePicker = new Windows.Storage.Pickers.FileSavePicker();
             savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
             // Dropdown of file types the user can save the file as
-            savePicker.FileTypeChoices.Add("zip-Datei", new List<string>() { ".zip" });
+            savePicker.FileTypeChoices.Add("zip-File", new List<string>() { ".zip" });
             // Default file name if the user does not type one in or select a file to replace
             if (InstructionDataProvider.Instruction != null && !string.IsNullOrEmpty(InstructionDataProvider.Instruction.Name))
             {
@@ -132,10 +132,10 @@ namespace ARInstructionsEditor.Views
             {
                 ContentDialog createNewFileDialog = new ContentDialog
                 {
-                    Title = "Neue Anleitung anlegen?",
-                    Content = "Änderungen an der aktuellen Anleitung gehen verloren, wenn sie zuvor nicht exportiert wurden.",
-                    PrimaryButtonText = "Neue Anleitung anlegen",
-                    CloseButtonText = "Abbruch"
+                    Title = "Create new instruction?",
+                    Content = "Unsaved changes will be lost. Export your instruction before creating a new one.",
+                    PrimaryButtonText = "Create new instruction",
+                    CloseButtonText = "Cancel"
                 };
 
                 ContentDialogResult result = await createNewFileDialog.ShowAsync();
@@ -162,10 +162,10 @@ namespace ARInstructionsEditor.Views
             {
                 ContentDialog loadFileDialog = new ContentDialog
                 {
-                    Title = "Anleitung laden?",
-                    Content = "Änderungen an der aktuellen Anleitung gehen verloren, wenn sie zuvor nicht exportiert wurden.",
-                    PrimaryButtonText = "Anleitung laden",
-                    CloseButtonText = "Abbruch"
+                    Title = "Load instruction?",
+                    Content = "Unsaved changes will be lost. Export your instruction before loading a new one.",
+                    PrimaryButtonText = "Load instruction",
+                    CloseButtonText = "Cancel"
                 };
 
                 ContentDialogResult result = await loadFileDialog.ShowAsync();

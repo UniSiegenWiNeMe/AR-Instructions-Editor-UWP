@@ -166,12 +166,48 @@
     <comment>Menu item text for Open a save</comment>
   </data>
   <data name="ShellMenuItem_File_Export.Text" xml:space="preserve">
-    <value>Anleitung exportieren</value>
+    <value>Export instruction</value>
   </data>
   <data name="ShellMenuItem_File_Create.Text" xml:space="preserve">
-    <value>Neue Anleitung</value>
+    <value>New instruction</value>
   </data>
   <data name="ShellMenuItem_File_Load.Text" xml:space="preserve">
-    <value>Anleitung laden</value>
+    <value>Load instruction</value>
+  </data>
+  <data name="ButtonAddPhoto.Content" xml:space="preserve">
+    <value>Add photo</value>
+  </data>
+  <data name="ButtonAddStep.Content" xml:space="preserve">
+    <value>Add Step</value>
+  </data>
+  <data name="ButtonAddVideo.Content" xml:space="preserve">
+    <value>Add video</value>
+  </data>
+  <data name="ButtonDeleteStep.Content" xml:space="preserve">
+    <value>Delete Step</value>
+  </data>
+  <data name="ButtonLoadInstruction.Content" xml:space="preserve">
+    <value>Load instruction</value>
+  </data>
+  <data name="ButtonMoveBackward.Content" xml:space="preserve">
+    <value>Move backward</value>
+  </data>
+  <data name="ButtonMoveForward.Content" xml:space="preserve">
+    <value>Move forward</value>
+  </data>
+  <data name="ButtonNewInstruction.Content" xml:space="preserve">
+    <value>Create new instruction</value>
+  </data>
+  <data name="DescriptionHeader.Text" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="LabelStepNumber.Text" xml:space="preserve">
+    <value>Stepnumber:</value>
+  </data>
+  <data name="PhotoHeader.Text" xml:space="preserve">
+    <value>Photos:</value>
+  </data>
+  <data name="VideoHeader.Text" xml:space="preserve">
+    <value>Videos:</value>
   </data>
 </root>

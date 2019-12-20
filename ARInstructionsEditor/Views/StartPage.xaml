@@ -13,8 +13,8 @@
     </Page.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{x:Bind loading, Mode=OneWay, Converter={StaticResource BooleanToVisiblityConverter}}">
-            <Button Click="ButtonNew_Click"  FontSize="36" >Neue Anleitung</Button>
-            <Button Click="ButtonLoad_Click" Margin="20,0,0,0" FontSize="36">Anleitung laden</Button>
+            <Button Click="ButtonNew_Click"  FontSize="36" x:Uid="ButtonNewInstruction"/>
+            <Button Click="ButtonLoad_Click" Margin="20,0,0,0" FontSize="36" x:Uid="ButtonLoadInstruction"/>
         </StackPanel>
         <ProgressRing Height="100" Width="100" IsActive="{x:Bind loading, Mode=OneWay}"/>
 

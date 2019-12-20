@@ -24,7 +24,7 @@
         VerticalScrollMode="Enabled">
         <StackPanel HorizontalAlignment="Left">
             <StackPanel Name="block" Padding="0,15,0,0">
-                <TextBlock Style="{StaticResource DetailSubTitleStyle}" Text="Schrittnummer:" />
+                <TextBlock Style="{StaticResource DetailSubTitleStyle}" x:Uid="LabelStepNumber"  />
                 <TextBlock Style="{StaticResource DetailBodyBaseMediumStyle}" Text="{x:Bind MasterMenuItem.StepNumber, Mode=OneWay}" />
                 <Grid Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
@@ -33,21 +33,23 @@
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <Button IsEnabled="{Binding PreviousStepAvaiable}" Click="ButtonVor_Click" Grid.Column="0" Margin="0,0,10,0">Nach vorne verschieben</Button>
-                    <Button IsEnabled="{Binding NextStepAvaiable}" Click="ButtonHinten_Click" Grid.Column="1" Margin="0,0,10,0">Nach hinten verschieben</Button>
-                    <Button Click="ButtonNew_Click" Grid.Column="2" Margin="0,0,10,0">Neuen Schritt hinzufügen</Button>
-                    <Button Click="ButtonDelete_Click" Grid.Column="3">Schritt löschen</Button>
+                    <Button IsEnabled="{Binding PreviousStepAvaiable}" Click="ButtonVor_Click" Grid.Column="0" Margin="0,0,10,0" x:Uid="ButtonMoveForward"/>
+                    <Button IsEnabled="{Binding NextStepAvaiable}" Click="ButtonHinten_Click" Grid.Column="1" Margin="0,0,10,0" x:Uid="ButtonMoveBackward"/>
+                    <Button Click="ButtonNew_Click" Grid.Column="2" Margin="0,0,10,0" x:Uid="ButtonAddStep"/>
+                    <Button Click="ButtonDelete_Click" Grid.Column="3" x:Uid="ButtonDeleteStep"/>
                 </Grid>
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
                     Style="{StaticResource DetailSubTitleStyle}"
-                    Text="Anweisungstext:" />
+                    x:Uid="DescriptionHeader"
+                   />
                 <!--<TextBlock Style="{StaticResource DetailBodyBaseMediumStyle}" Text="{Binding Path=Text, Mode=OneWay}" FontFamily="Segoe UI" />-->
                 <TextBox Text="{x:Bind MasterMenuItem.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
                     Style="{StaticResource DetailSubTitleStyle}"
-                    Text="Fotos:" />
+                    x:Uid="PhotoHeader"
+                    />
                 <GridView
                     animations:Connected.ListItemElementName="thumbnailImage"
                     animations:Connected.ListItemKey="galleryAnimationKey"
@@ -78,11 +80,12 @@
                 </GridView>
                 <!--Padding="{StaticResource MediumLeftRightMargin}"-->
 
-                <Button Click="ButtonAddPhoto_Click">Foto hinzufügen</Button>
+                <Button Click="ButtonAddPhoto_Click" x:Uid="ButtonAddPhoto"/> 
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
                     Style="{StaticResource DetailSubTitleStyle}"
-                    Text="Videos:" />
+                    x:Uid="VideoHeader"
+                     />
 
                 <GridView
                     animations:Connected.ListItemElementName="thumbnailImage"
@@ -105,7 +108,7 @@
                     </GridView.ItemTemplate>
                 </GridView>
 
-                <Button Click="ButtonAddVideo_Click">Video hinzufügen</Button>
+                <Button Click="ButtonAddVideo_Click" x:Uid="ButtonAddVideo"/>
                 <!--Padding="{StaticResource MediumLeftRightMargin}"-->
 
                 <!--<Image
