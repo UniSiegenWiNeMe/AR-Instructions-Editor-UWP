@@ -184,6 +184,14 @@ namespace ARInstructionsEditor.Views
                         Type = file.Type
                     });
                 }
+                foreach (var file in stepVM.Videos)
+                {
+                    tmpMediaFiles.Add(new MediaFile()
+                    {
+                        FileName = file.FileName.Split(@"\").Last(),
+                        Type = file.Type
+                    });
+                }
 
                 ret.Add(new Step()
                 {

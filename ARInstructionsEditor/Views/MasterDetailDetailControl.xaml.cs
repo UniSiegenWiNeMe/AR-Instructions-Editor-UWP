@@ -117,7 +117,7 @@ namespace ARInstructionsEditor.Views
                     await file.CopyAsync(await StorageFolder.GetFolderFromPathAsync(Path.Combine(ApplicationData.Current.TemporaryFolder.Path, "media")));
                 }
 
-                MasterMenuItem.AddVideoFile(new MediaFileViewModel() { FileName = Path.Combine(ApplicationData.Current.TemporaryFolder.Path,"media", file.Name) });
+                MasterMenuItem.AddVideoFile(new MediaFileViewModel() { FileName = Path.Combine(ApplicationData.Current.TemporaryFolder.Path,"media", file.Name), Type = MediaType.Video });
                 //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Videos"));
             }
             else
