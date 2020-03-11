@@ -22,11 +22,14 @@
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <PackageCertificateThumbprint>E186CD13B8292A1A09E76AB568ABDF85D637BF4C</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <PackageCertificateThumbprint>3CA9C97CAA2574BB5A5C116396E79DD1A3F4527B</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <AppxBundle>Always</AppxBundle>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -121,6 +124,7 @@
     <Compile Include="Activation\ActivationHandler.cs" />
     <Compile Include="Events\INotifyPropertyChangedExtended.cs" />
     <Compile Include="Events\PropertyChangedExtendedEventArgs.cs" />
+    <Compile Include="Helpers\EnumToBooleanConverter.cs" />
     <Compile Include="Helpers\ImagesNavigationHelper.cs" />
     <Compile Include="Helpers\MenuNavigationHelper.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
@@ -134,6 +138,9 @@
     <Compile Include="ViewModels\InstructionViewModel.cs" />
     <Compile Include="ViewModels\MediaFileViewModel.cs" />
     <Compile Include="ViewModels\StepViewModel.cs" />
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImageGalleryDetailPage.xaml.cs" />
     <Compile Include="Views\MasterDetailDetailControl.xaml.cs">
       <DependentUpon>MasterDetailDetailControl.xaml</DependentUpon>
@@ -182,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\TextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

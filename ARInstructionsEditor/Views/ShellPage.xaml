@@ -34,6 +34,7 @@
                     <MenuFlyoutItem x:Uid="ShellMenuItem_File_Load" Click="ShellMenuItemClick_File_Load" />
                     <MenuFlyoutItem x:Uid="ShellMenuItem_File_Export" Click="ShellMenuItemClick_File_Export" />
                     <MenuFlyoutSeparator/>
+                    <MenuFlyoutItem x:Uid="ShellMenuItem_File_Settings" Click="ShellMenuItemClick_File_Settings" />
                     <MenuFlyoutItem x:Uid="ShellMenuItem_File_Exit" Click="ShellMenuItemClick_File_Exit" />
                 </winui:MenuBarItem>
             </winui:MenuBar>

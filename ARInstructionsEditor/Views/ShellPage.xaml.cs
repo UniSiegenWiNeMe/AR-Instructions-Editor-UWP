@@ -221,5 +221,10 @@ namespace ARInstructionsEditor.Views
                 }
             }
         }
+
+        private void ShellMenuItemClick_File_Settings(object sender, RoutedEventArgs e)
+        {
+            MenuNavigationHelper.OpenInRightPane(typeof(SettingsPage));
+        }
     }
 }

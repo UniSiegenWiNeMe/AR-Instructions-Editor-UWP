@@ -9,7 +9,7 @@
 
   <Identity
     Name="ARInstructionsEditor"
-    Version="1.0.47.0" 
+    Version="1.0.61.0" 
     Publisher="CN=FlorianJasche"/>
 
   <mp:PhoneIdentity PhoneProductId="1b9ee794-f621-47ab-a41d-09e978bc1584" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
