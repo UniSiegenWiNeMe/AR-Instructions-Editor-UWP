@@ -138,6 +138,7 @@ namespace ARInstructionsEditor.ViewModels
             StepNumber = from.StepNumber-1;
             Items = from.Items;
             Photos = from.Photos;
+            Videos = from.Videos;
             Text = from.Text;
         }
         public void RemoveStep()

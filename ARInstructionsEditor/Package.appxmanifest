@@ -8,15 +8,15 @@
   IgnorableNamespaces="uap mp genTemplate">
 
   <Identity
-    Name="ARInstructionsEditor"
-    Version="1.0.61.0" 
-    Publisher="CN=FlorianJasche"/>
+    Name="53586FlorianJasche.ARInstructionsEditor"
+    Version="1.0.67.0" 
+    Publisher="CN=9B19B67C-CD90-4C76-9180-587243A50A6A"/>
 
-  <mp:PhoneIdentity PhoneProductId="1b9ee794-f621-47ab-a41d-09e978bc1584" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="4191b4b9-10d8-4e4a-876c-588c2d4fa77a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
   
   <Properties>
     <DisplayName>AR Instructions Editor</DisplayName>
-    <PublisherDisplayName>Mittelstand 4.0 Kompetenzzentrum Siegen</PublisherDisplayName>
+    <PublisherDisplayName>Florian Jasche</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
