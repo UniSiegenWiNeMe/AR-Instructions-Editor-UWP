@@ -27,6 +27,7 @@ namespace ARInstructionsEditor.ViewModels
         public MediaFileViewModel(MediaFile from)
         {
             FileName = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, "media", from.FileName);
+            Type = from.Type;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
