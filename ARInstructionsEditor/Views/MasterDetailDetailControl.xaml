@@ -57,11 +57,11 @@
                     ItemClick="ImagesGridView_ItemClick"
                     ItemsSource="{Binding Path=Photos, Mode=OneWay}"
                     SelectionMode="None"
-                    RightTapped="GridView_RightTapped">
+                    RightTapped="GridViewImage_RightTapped">
                     <GridView.Resources>
                         <MenuFlyout x:Name="PhotosMenuFlyout">
                             <MenuFlyout.Items>
-                                <MenuFlyoutItem x:Name="Remove" Text="Remove" Icon="Delete" Click="Remove_Click" />
+                                <MenuFlyoutItem x:Name="Remove" Text="Remove" Icon="Delete" Click="RemovePhoto_Click" />
                             </MenuFlyout.Items>
                         </MenuFlyout>
                     </GridView.Resources>
@@ -92,7 +92,15 @@
                     animations:Connected.ListItemKey="galleryAnimationKey"
                     IsItemClickEnabled="False"
                     ItemsSource="{Binding Path=Videos, Mode=OneWay}"
-                    SelectionMode="None">
+                    SelectionMode="None"
+                    RightTapped="GridViewVideo_RightTapped">
+                    <GridView.Resources>
+                        <MenuFlyout x:Name="VideoMenuFlyout">
+                            <MenuFlyout.Items>
+                                <MenuFlyoutItem x:Name="RemoveVideo" Text="Remove" Icon="Delete" Click="RemoveVideo_Click" />
+                            </MenuFlyout.Items>
+                        </MenuFlyout>
+                    </GridView.Resources>
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="viewModels:MediaFileViewModel">
                             <MediaPlayerElement x:Name="mediaPlayer"

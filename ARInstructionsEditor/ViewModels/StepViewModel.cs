@@ -209,5 +209,10 @@ namespace ARInstructionsEditor.ViewModels
             Photos.Remove(photo);
             OnPropertyChanged("Photos");
         }
+        public void RemoveVideoFile(MediaFileViewModel video)
+        {
+            Videos.Remove(video);
+            OnPropertyChanged("Videos");
+        }
     }
 }

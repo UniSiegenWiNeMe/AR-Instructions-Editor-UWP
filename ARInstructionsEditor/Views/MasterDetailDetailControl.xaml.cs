@@ -126,14 +126,22 @@ namespace ARInstructionsEditor.Views
         }
 
         private MediaFileViewModel _lastRightClickedImage;
-        private void GridView_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        private void GridViewImage_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
             GridView gridView = (GridView)sender;
             PhotosMenuFlyout.ShowAt(gridView, e.GetPosition(gridView));
             _lastRightClickedImage = (MediaFileViewModel)((FrameworkElement)e.OriginalSource).DataContext;
         }
 
-        private async void Remove_Click(object sender, RoutedEventArgs e)
+        private MediaFileViewModel _lastRightClickedVideo;
+        private void GridViewVideo_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+            GridView gridView = (GridView)sender;
+            VideoMenuFlyout.ShowAt(gridView, e.GetPosition(gridView));
+            _lastRightClickedVideo = (MediaFileViewModel)((FrameworkElement)e.OriginalSource).DataContext;
+        }
+
+        private async void RemovePhoto_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog deleteFileDialog = new ContentDialog
             {
@@ -200,6 +208,38 @@ namespace ARInstructionsEditor.Views
                 };
                 await errorDialog.ShowAsync();
             }
+        }
+
+        private async void RemoveVideo_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog deleteFileDialog = new ContentDialog
+            {
+                Title = "Delete Video?",
+                Content = "Are you sure to delete this video?",
+                PrimaryButtonText = "Delete",
+                CloseButtonText = "Cancel"
+            };
+
+            ContentDialogResult result = await deleteFileDialog.ShowAsync();
+
+            // Delete the file if the user clicked the primary button.
+            /// Otherwise, do nothing.
+            if (result == ContentDialogResult.Primary)
+            {
+                // Delete the file.
+                MasterMenuItem.RemoveVideoFile(_lastRightClickedVideo);
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Photos"));
+            }
+            else
+            {
+                // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                // Do nothing.
+            }
+        }
+
+        private void GridViewImages_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+
         }
     }
 

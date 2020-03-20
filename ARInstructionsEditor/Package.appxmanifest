@@ -9,7 +9,7 @@
 
   <Identity
     Name="53586FlorianJasche.ARInstructionsEditor"
-    Version="1.0.67.0" 
+    Version="1.0.77.0" 
     Publisher="CN=9B19B67C-CD90-4C76-9180-587243A50A6A"/>
 
   <mp:PhoneIdentity PhoneProductId="4191b4b9-10d8-4e4a-876c-588c2d4fa77a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
